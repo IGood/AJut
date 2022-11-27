@@ -34,7 +34,17 @@
                 </TextBlock.Inlines>
             </TextBlock>
         </StackPanel>
-        <ajut:FlatTreeListControl Grid.Row="1" Root="{Binding ElementName=Self, Path=Root}" TabbingSize="10" Margin="10" BorderThickness="1">
+        <ajut:FlatTreeListControl x:Name="FTLControl" Grid.Row="1" Root="{Binding ElementName=Self, Path=Root}" TabbingSize="10" Margin="10" BorderThickness="1">
+            <ajut:FlatTreeListControl.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Insert as sibling">
+                        <MenuItem Header="Above" Click="InsertAsSiblingAbove_OnClick" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ajut:FlatTreeListControl}}, Path=SelectedItem.Parent.CanHaveChildren, Mode=OneWay}"/>
+                        <MenuItem Header="Below" Click="InsertAsSiblingBelow_OnClick" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ajut:FlatTreeListControl}}, Path=SelectedItem.Parent.CanHaveChildren, Mode=OneWay}"/>
+                    </MenuItem>
+                    <MenuItem Header="Insert into children (first)" Click="InsertIntoChildren_OnClick" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ajut:FlatTreeListControl}}, Path=SelectedItem.CanHaveChildren, Mode=OneWay}"/>
+                    <MenuItem Header="Add to children (last)" Click="AddToChildren_OnClick" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ajut:FlatTreeListControl}}, Path=SelectedItem.CanHaveChildren, Mode=OneWay}"/>
+                </ContextMenu>
+            </ajut:FlatTreeListControl.ContextMenu>
             <ajut:FlatTreeListControl.Resources>
                 <DataTemplate DataType="{x:Type local:TestTreeItem}">
                     <DockPanel>

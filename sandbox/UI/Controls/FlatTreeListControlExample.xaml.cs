@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using System.Windows;
     using System.Windows.Controls;
+    using AJut.Extensions;
     using AJut.Storage;
     using AJut.UX;
     using DPUtils = AJut.UX.DPUtils<FlatTreeListControlExample>;
@@ -70,6 +71,42 @@
     </ajut:FlatTreeListControl.Resources>
 </ajut:FlatTreeListControl>")
                 );
+        }
+
+        private void InsertAsSiblingAbove_OnClick (object sender, RoutedEventArgs e)
+        {
+            if (this.FTLControl.SelectedItem is TestTreeItem lastSelected && lastSelected.Parent != null)
+            {
+                int ind = lastSelected.Parent.Children.IndexOfReadOnly(lastSelected);
+                lastSelected.Parent.InsertChild(ind, new TestTreeItem());
+            }
+        }
+
+        private void InsertAsSiblingBelow_OnClick (object sender, RoutedEventArgs e)
+        {
+            if (this.FTLControl.SelectedItem is TestTreeItem lastSelected && lastSelected.Parent != null)
+            {
+                int ind = lastSelected.Parent.Children.IndexOfReadOnly(lastSelected) + 1;
+                lastSelected.Parent.InsertChild(ind, new TestTreeItem());
+            }
+        }
+
+        private void InsertIntoChildren_OnClick (object sender, RoutedEventArgs e)
+        {
+            if (this.FTLControl.SelectedItem is TestTreeItem lastSelected)
+            {
+                lastSelected.CanHaveChildren = true;
+                lastSelected.InsertChild(0, new TestTreeItem());
+            }
+        }
+
+        private void AddToChildren_OnClick (object sender, RoutedEventArgs e)
+        {
+            if (this.FTLControl.SelectedItem is TestTreeItem lastSelected)
+            {
+                lastSelected.CanHaveChildren = true;
+                lastSelected.AddChild(new TestTreeItem());
+            }
         }
     }
 
